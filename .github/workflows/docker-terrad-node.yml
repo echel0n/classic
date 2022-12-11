@@ -1,4 +1,4 @@
-name: Build & Push terrad-binary
+name: Build & Push terrad-node
 # Build & Push builds the simapp docker image on every push to master and
 # and pushes the image to https://hub.docker.com/r/interchainio/simapp/tags
 on:
@@ -23,7 +23,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=ghcr.io/echel0n/terraclassic.terrad-node
+          DOCKER_IMAGE=ghcr.io/echel0n/classic/terraclassic.terrad-node
           VERSION=noop
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
