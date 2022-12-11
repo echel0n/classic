@@ -23,7 +23,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=ghcr.io/echel0n/classic/terraclassic.terrad-binary
+          DOCKER_IMAGE=ghcr.io/echel0n/terraclassic.terrad-binary
           VERSION=noop
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
