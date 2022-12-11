@@ -1,4 +1,4 @@
-name: Build & Push
+name: Build & Push terrad-binary
 # Build & Push builds the simapp docker image on every push to master and
 # and pushes the image to https://hub.docker.com/r/interchainio/simapp/tags
 on:
@@ -23,7 +23,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=ghcr.io/terra-rebels/terraclassic.terrad-binary
+          DOCKER_IMAGE=ghcr.io/echel0n/terraclassic.terrad-binary
           VERSION=noop
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
@@ -51,15 +51,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish terrad-binary to Docker Hub
+      - name: Publish to Docker Hub
         uses: docker/build-push-action@v3.2.0
         with:
-          push: ${{ github.event_name != 'pull_request' && !contains(github.ref, 'release') }}
-          tags: ${{ steps.prep.outputs.tags }}
-
-      - name: Publish terrad-node to Docker Hub
-        uses: docker/build-push-action@v3.2.0
-        with:
-          context: "{{defaultContext}}:docker"
+          file: "./Dockerfile.terraclassic.terrad-binary"
           push: ${{ github.event_name != 'pull_request' && !contains(github.ref, 'release') }}
           tags: ${{ steps.prep.outputs.tags }}
