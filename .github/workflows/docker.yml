@@ -51,8 +51,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish to Docker Hub
+      - name: Publish terrad-binary to Docker Hub
         uses: docker/build-push-action@v3.2.0
         with:
+          push: ${{ github.event_name != 'pull_request' && !contains(github.ref, 'release') }}
+          tags: ${{ steps.prep.outputs.tags }}
+
+      - name: Publish terrad-node to Docker Hub
+        uses: docker/build-push-action@v3.2.0
+        with:
+          file: {context}/docker/Dockerfile
           push: ${{ github.event_name != 'pull_request' && !contains(github.ref, 'release') }}
           tags: ${{ steps.prep.outputs.tags }}
